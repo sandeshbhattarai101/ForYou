@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Be My Valentine?</title>
     
-    <!-- Google Fonts for a trendy look -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: 'Montserrat' for a trendy, minimal geometric look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Confetti Library for the celebration -->
+    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -19,99 +19,106 @@
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            background-color: #ffdde1; 
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* Important: keeps button inside screen */
         }
 
-        /* The Main Card */
         .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px); /* Glassmorphism effect */
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 500px;
             width: 90%;
+            max-width: 450px;
             position: relative;
+            z-index: 1;
         }
 
         h1 {
-            color: #ff4d6d;
-            margin-bottom: 20px;
-            font-weight: 800;
+            color: #E03E5D;
             font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
         }
 
+        p {
+            color: #888;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .gif-container {
+            margin-bottom: 30px;
+        }
+        
         .gif-container img {
             width: 100%;
-            max-width: 250px;
+            max-width: 220px;
             border-radius: 15px;
-            margin-bottom: 20px;
         }
 
-        .btn-group {
+        .btn-wrapper {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
-            position: relative; /* Important for the No button logic */
-            height: 60px; /* Reserve space */
+            margin-top: 10px;
+            position: relative;
+            min-height: 60px; /* Reserves space */
         }
 
         button {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
+            padding: 14px 35px;
             border: none;
             border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background 0.3s ease;
         }
 
-        /* The Yes Button */
-        .btn-yes {
-            background-color: #2ecc71;
+        /* Clean Green YES button */
+        .yes-btn {
+            background-color: #2ED573;
             color: white;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-        }
-        .btn-yes:hover {
-            transform: scale(1.05);
-            background-color: #27ae60;
-        }
-
-        /* The No Button */
-        .btn-no {
-            background-color: #e74c3c;
-            color: white;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-            position: absolute; /* Allows it to move freely */
-            transition: all 0.3s ease; /* Smooth movement */
-        }
-
-        /* Success Message State */
-        .success-message {
-            display: none;
+            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
         }
         
-        .success-text {
-            color: #ff4d6d;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-top: 15px;
+        .yes-btn:hover {
+            transform: scale(1.05);
+            background-color: #26af61;
         }
 
-        /* Mobile adjustments */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
-            .container { padding: 20px; }
+        /* Clean Gray NO button */
+        .no-btn {
+            background-color: #F1F2F6;
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: top 0.4s ease, left 0.4s ease; /* Smooth glide */
+        }
+
+        /* State when No button is floating */
+        .no-btn.absolute {
+            position: fixed; /* Moves relative to the whole screen */
+            z-index: 100;
+        }
+
+        /* Success Message */
+        .success-content {
+            display: none;
+        }
+
+        /* Mobile specific: disable proximity on touch devices or it gets buggy */
+        @media (hover: none) {
+            .no-btn {
+                transition: none; /* Instant snap on touch */
+            }
         }
     </style>
 </head>
@@ -119,87 +126,109 @@
 
     <div class="container">
         
-        <!-- Screen 1: The Question -->
-        <div id="question-screen">
-            <h1>Will you be my Valentine? 🌹</h1>
-            <div class="gif-container">
-                <!-- Cute asking GIF (Bubu and Dudu or similar cute bear) -->
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmM2Z242NHnnOXJ5NzM5eG53ZWN4Z285M3ZqM2VqNGZ6ZzF3MzY1CZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute bear asking">
-            </div>
+        <!-- Question Content -->
+        <div id="question-content">
+            <h1>Be my Valentine?</h1>
+            <p>Don't even think about clicking no... 😉</p>
             
-            <div class="btn-group">
-                <button class="btn-yes" onclick="handleYes()">Yes</button>
-                <button class="btn-no" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            <div class="gif-container">
+                <!-- Cute Mocha/Milk Bear GIF -->
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzZ5YnZ6M295b3V6bnd2bmZ5enZ1eGg5eHR4Z2t3YnZ6ZzV6ZzV6eSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/iCVzZwwE6QhFPHR5Wn/giphy.gif" alt="Cute Bear">
+            </div>
+
+            <div class="btn-wrapper">
+                <button class="yes-btn" onclick="handleYes()">YES</button>
+                <button class="no-btn" id="noBtn">NO</button>
             </div>
         </div>
 
-        <!-- Screen 2: The Celebration (Hidden initially) -->
-        <div id="success-screen" class="success-message">
-            <h1>YAAAY! I knew it! ❤️</h1>
+        <!-- Success Content -->
+        <div id="success-content" class="success-content">
+            <h1>YAAAY! ❤️</h1>
+            <p>I knew you would say yes!</p>
             <div class="gif-container">
-                <!-- Happy celebration GIF -->
-                <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy bear hugging">
+                <!-- Excited Bear GIF -->
+                <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy Bear">
             </div>
-            <div class="success-text">See you on the 14th! xoxo</div>
         </div>
 
     </div>
 
     <script>
-        const noBtn = document.querySelector('.btn-no');
-        const yesBtn = document.querySelector('.btn-yes');
-        const questionScreen = document.getElementById('question-screen');
-        const successScreen = document.getElementById('success-screen');
-        const container = document.querySelector('.container');
-        const containerRect = container.getBoundingClientRect();
+        const noBtn = document.getElementById('noBtn');
+        const questionContent = document.getElementById('question-content');
+        const successContent = document.getElementById('success-content');
+        
+        let isMoving = false; // Prevent glitching if mouse moves too fast
 
-        // 1. Logic to make the "No" button run away
-        function moveButton() {
-            // Get the dimensions of the container to keep button inside (or close to it)
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+        // Mouse Move Event Listener (The Proximity Logic)
+        document.addEventListener('mousemove', function(e) {
             
-            // Calculate a random position
-            // We ensure it stays somewhat visible but hard to click
-            const newX = Math.random() * (width - 100); 
-            const newY = Math.random() * (height - 50);
+            if(successContent.style.display === 'block') return; // Stop if already accepted
 
-            // Apply the new position
-            noBtn.style.position = "fixed"; // Switch to fixed to move anywhere on screen
-            noBtn.style.left = newX + "px";
-            noBtn.style.top = newY + "px";
-        }
-
-        // 2. Logic for clicking "Yes"
-        function handleYes() {
-            // Hide the question
-            questionScreen.style.display = 'none';
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
             
-            // Show the success
-            successScreen.style.display = 'block';
+            // Get Button Position
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + (btnRect.width / 2);
+            const btnCenterY = btnRect.top + (btnRect.height / 2);
 
-            // Trigger Confetti (Celebration)
-            triggerConfetti();
-        }
+            // Calculate Distance between Mouse and Button Center (Pythagorean theorem)
+            const distance = Math.sqrt(
+                Math.pow(mouseX - btnCenterX, 2) + 
+                Math.pow(mouseY - btnCenterY, 2)
+            );
 
-        // 3. Confetti Effect Function
-        function triggerConfetti() {
-            const count = 200;
-            const defaults = {
-                origin: { y: 0.7 }
-            };
-
-            function fire(particleRatio, opts) {
-                confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                }));
+            // If Mouse is within 150px of the button... RUN!
+            if (distance < 150) {
+                moveButton();
             }
+        });
 
-            fire(0.25, { spread: 26, startVelocity: 55 });
-            fire(0.2, { spread: 60 });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
+        // Also move if clicked (just in case they are fast)
+        noBtn.addEventListener('click', moveButton);
+
+        function moveButton() {
+            if (isMoving) return; // Debounce slightly
+            isMoving = true;
+
+            // Make it absolute so it can go anywhere
+            noBtn.classList.add('absolute');
+
+            // Screen dimensions
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+            
+            // Button dimensions
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Random Position Logic
+            // We subtract btnWidth/Height to keep it strictly ON screen
+            const newX = Math.random() * (winWidth - btnWidth - 50) + 25;
+            const newY = Math.random() * (winHeight - btnHeight - 50) + 25;
+
+            // Apply new position
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+
+            // Reset lock after transition allows smooth movement
+            setTimeout(() => { isMoving = false; }, 200);
+        }
+
+        function handleYes() {
+            // Hide question, show success
+            questionContent.style.display = 'none';
+            successContent.style.display = 'block';
+
+            // Confetti Explosion
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#FF9A9E', '#FECFEF', '#E03E5D']
+            });
         }
     </script>
 </body>
