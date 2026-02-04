@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Bipanu ❤️</title>
     
-    <!-- Google Fonts: 'Montserrat' -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: 'Fredoka' for a cute, bold, rounded look -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -20,146 +20,171 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
-            min-height: 100vh; /* changed to min-height for safety */
-            height: 100vh;
+            /* Richer gradient */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fad0c4 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Keeps the game contained */
+            overflow: hidden; 
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(10px); /* Glass effect */
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
             width: 90%;
-            max-width: 480px; /* Slightly wider to fit images better */
+            max-width: 650px; /* Made bigger */
             position: relative;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         h1 {
-            color: #E03E5D;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            font-weight: 800;
+            font-family: 'Fredoka', sans-serif; /* New Cute Font */
+            color: #ff4d6d;
+            /* This ensures text stays on one line but scales down on mobile */
+            font-size: clamp(1.2rem, 4.5vw, 2.8rem); 
+            white-space: nowrap; 
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
         }
 
         p {
             color: #888;
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
         }
 
-        /* Image Handling */
+        /* --- Image Styling --- */
         .gif-container {
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px; /* Space between images if there are two */
+            gap: 15px;
         }
         
         .gif-container img {
             width: 100%;
-            max-width: 250px;
-            height: 200px; /* Fixed height for consistency */
-            object-fit: contain; /* Ensures image isn't stretched/distorted */
-            border-radius: 15px;
+            max-width: 350px; /* Bigger images */
+            height: 280px;    /* Taller images */
+            object-fit: cover; 
+            border-radius: 20px;
+            
+            /* Visual Enhancements */
+            border: 6px solid #fff;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2); /* Pink glow shadow */
+            transition: transform 0.3s ease;
         }
 
-        /* Special styling for the success screen with 2 images */
+        /* Subtle float animation for the question image */
+        #question-content .gif-container img {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Success screen images */
         .success-imgs img {
-            max-width: 45%; /* Show them side by side */
-            height: 150px;
+            max-width: 48%; 
+            height: 220px;
+            object-fit: cover;
         }
 
+        /* --- Buttons --- */
         .btn-wrapper {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             width: 100%;
             position: relative;
-            min-height: 60px; /* Reserve space so layout doesn't jump */
+            min-height: 70px;
         }
 
         button {
-            padding: 14px 40px;
+            padding: 16px 50px; /* Bigger buttons */
             border: none;
             border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
+            font-family: 'Fredoka', sans-serif; /* Matching font */
+            font-weight: 600;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.3s ease;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
+            letter-spacing: 1px;
         }
 
         /* YES button */
         .yes-btn {
-            background-color: #2ED573;
+            background-color: #ff4d6d;
             color: white;
-            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
             z-index: 20;
         }
         
         .yes-btn:hover {
-            transform: scale(1.05);
-            background-color: #26af61;
+            transform: translateY(-3px) scale(1.05);
+            background-color: #e03e5d;
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
         }
 
         /* NO button */
         .no-btn {
-            background-color: #F1F2F6;
+            background-color: #fff;
             color: #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: top 0.3s ease, left 0.3s ease; /* Fast smooth movement */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 2px solid #f0f0f0;
+            transition: top 0.3s ease, left 0.3s ease; 
         }
 
         .no-btn.absolute {
             position: fixed; 
-            z-index: 100; /* Above everything */
+            z-index: 100; 
         }
 
-        /* Success Message Hidden by default */
         .success-content {
             display: none;
             width: 100%;
         }
 
         /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
+                width: 95%;
             }
 
             .gif-container img {
-                height: 160px; /* Smaller images on mobile */
+                height: 200px; /* Slightly smaller on mobile to fit screen */
                 max-width: 100%;
             }
 
+            .success-imgs img {
+                height: 150px;
+            }
+
             button {
-                padding: 12px 30px;
-                font-size: 0.95rem;
+                padding: 14px 30px;
+                font-size: 1rem;
             }
             
-            /* On small screens, stack the success images slightly differently if needed */
-            .success-imgs img {
-                height: 120px;
+            .btn-wrapper {
+                gap: 15px;
             }
         }
     </style>
@@ -185,8 +210,8 @@
 
         <!-- Success Content -->
         <div id="success-content" class="success-content">
-            <h1>YAAAY! ❤️</h1>
-            <p>I knew you would say yes!</p>
+            <h1>YAAAY! I Love You! ❤️</h1>
+            
             <div class="gif-container success-imgs">
                 <!-- Success GIFs -->
                 <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy Bear">
@@ -203,7 +228,7 @@
         
         let isMoving = false; 
 
-        // 1. Desktop Proximity Logic (Mouse)
+        // 1. Desktop Proximity Logic
         document.addEventListener('mousemove', function(e) {
             if(successContent.style.display === 'block') return; 
 
@@ -218,16 +243,15 @@
                 Math.pow(mouseY - btnCenterY, 2)
             );
 
-            // Distance check (150px radius)
+            // Radius set to 150px
             if (distance < 150) {
                 moveButton();
             }
         });
 
-        // 2. Mobile Touch Logic (Tap/TouchStart)
-        // Since mobile doesn't have "hover", we move it the moment they touch it.
+        // 2. Mobile Touch Logic
         noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevents the 'click' from happening
+            e.preventDefault(); 
             moveButton();
         });
 
@@ -238,26 +262,21 @@
             if (isMoving) return; 
             isMoving = true;
 
-            // Switch to fixed positioning so it can fly anywhere on screen
             noBtn.classList.add('absolute');
 
             // Screen dimensions
             const winWidth = window.innerWidth;
             const winHeight = window.innerHeight;
-            
-            // Button dimensions
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Calculate new position ensuring it stays within screen bounds
-            // We use a buffer of 20px from edges
+            // Math to ensure button stays on screen
             const newX = Math.random() * (winWidth - btnWidth - 40) + 20;
             const newY = Math.random() * (winHeight - btnHeight - 40) + 20;
 
             noBtn.style.left = `${newX}px`;
             noBtn.style.top = `${newY}px`;
 
-            // Allow movement again after a short delay
             setTimeout(() => { isMoving = false; }, 200);
         }
 
@@ -265,7 +284,7 @@
             questionContent.style.display = 'none';
             successContent.style.display = 'block';
 
-            // Confetti Explosion
+            // Big Confetti Celebration
             const duration = 3000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -281,7 +300,6 @@
 
                 const particleCount = 50 * (timeLeft / duration);
                 
-                // multiple confetti sources for big celebration
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
