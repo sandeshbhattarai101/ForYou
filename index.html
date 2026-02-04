@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>❤️ Bipanu ❤️</title>
+    <title>For Bipanu ❤️</title>
     
-    <!-- Google Fonts: 'Fredoka' for a cute, bold, rounded look -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts: 'Fredoka' for the cute bold look -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -20,55 +20,49 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            /* Richer gradient */
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fad0c4 100%);
-            min-height: 100vh;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; 
+            overflow: hidden; /* Strictly prevents scrolling */
+            position: relative;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.90);
-            backdrop-filter: blur(10px); /* Glass effect */
-            padding: 50px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
             border-radius: 30px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
             width: 90%;
-            max-width: 650px; /* Made bigger */
+            max-width: 650px; /* Big card */
             position: relative;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.7);
         }
 
         h1 {
-            font-family: 'Fredoka', sans-serif; /* New Cute Font */
+            font-family: 'Fredoka', sans-serif;
             color: #ff4d6d;
-            /* This ensures text stays on one line but scales down on mobile */
-            font-size: clamp(1.2rem, 4.5vw, 2.8rem); 
+            /* Responsive font size that forces one line mostly, but shrinks on tiny screens */
+            font-size: clamp(1.4rem, 5vw, 2.8rem); 
             white-space: nowrap; 
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.2;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
         }
 
-        p {
-            color: #888;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        /* --- Image Styling --- */
+        /* GIF Container Styling */
         .gif-container {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,36 +71,24 @@
         
         .gif-container img {
             width: 100%;
-            max-width: 350px; /* Bigger images */
-            height: 280px;    /* Taller images */
+            max-width: 380px; /* Big Image */
+            height: 280px;    
             object-fit: cover; 
             border-radius: 20px;
             
-            /* Visual Enhancements */
-            border: 6px solid #fff;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2); /* Pink glow shadow */
-            transition: transform 0.3s ease;
+            /* The "Sticker" Look */
+            border: 8px solid #fff;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.25); 
         }
 
-        /* Subtle float animation for the question image */
-        #question-content .gif-container img {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Success screen images */
+        /* Success screen specific layout */
         .success-imgs img {
-            max-width: 48%; 
-            height: 220px;
+            max-width: 48%; /* Side by side */
+            height: 200px;
             object-fit: cover;
         }
 
-        /* --- Buttons --- */
+        /* Buttons Area */
         .btn-wrapper {
             display: flex;
             justify-content: center;
@@ -117,19 +99,18 @@
         }
 
         button {
-            padding: 16px 50px; /* Bigger buttons */
+            padding: 18px 50px;
             border: none;
             border-radius: 50px;
-            font-family: 'Fredoka', sans-serif; /* Matching font */
+            font-family: 'Fredoka', sans-serif;
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s ease, background 0.3s ease;
             white-space: nowrap;
-            letter-spacing: 1px;
         }
 
-        /* YES button */
+        /* YES button styling */
         .yes-btn {
             background-color: #ff4d6d;
             color: white;
@@ -138,23 +119,25 @@
         }
         
         .yes-btn:hover {
-            transform: translateY(-3px) scale(1.05);
+            transform: scale(1.05);
             background-color: #e03e5d;
-            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
         }
 
-        /* NO button */
+        /* NO button styling */
         .no-btn {
-            background-color: #fff;
+            background-color: #ffffff;
             color: #333;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 2px solid #f0f0f0;
-            transition: top 0.3s ease, left 0.3s ease; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 2px solid #eee;
+            
+            /* Slower transition here: 0.5s */
+            transition: top 0.5s ease, left 0.5s ease; 
         }
 
+        /* When the button escapes */
         .no-btn.absolute {
             position: fixed; 
-            z-index: 100; 
+            z-index: 9999; /* Highest priority */
         }
 
         .success-content {
@@ -162,29 +145,27 @@
             width: 100%;
         }
 
-        /* --- MOBILE RESPONSIVENESS --- */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
-                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.6rem; /* Ensures it fits nicely on phone */
             }
 
             .gif-container img {
-                height: 200px; /* Slightly smaller on mobile to fit screen */
-                max-width: 100%;
-            }
-
-            .success-imgs img {
-                height: 150px;
-            }
-
-            button {
-                padding: 14px 30px;
-                font-size: 1rem;
+                height: 200px;
             }
             
-            .btn-wrapper {
-                gap: 15px;
+            button {
+                padding: 14px 35px;
+                font-size: 1.1rem;
+            }
+            
+            .success-imgs img {
+                height: 140px;
             }
         }
     </style>
@@ -211,6 +192,7 @@
         <!-- Success Content -->
         <div id="success-content" class="success-content">
             <h1>YAAAY! I Love You! ❤️</h1>
+            <p>I knew you would say yes!</p>
             
             <div class="gif-container success-imgs">
                 <!-- Success GIFs -->
@@ -243,8 +225,8 @@
                 Math.pow(mouseY - btnCenterY, 2)
             );
 
-            // Radius set to 150px
-            if (distance < 150) {
+            // Radius set to 200px (Slightly larger since button moves slower now)
+            if (distance < 200) {
                 moveButton();
             }
         });
@@ -262,42 +244,48 @@
             if (isMoving) return; 
             isMoving = true;
 
+            // Make button fixed so it can float anywhere
             noBtn.classList.add('absolute');
 
-            // Screen dimensions
+            // --- STRICT BOUNDARY LOGIC ---
+            // 1. Get total viewport size
             const winWidth = window.innerWidth;
             const winHeight = window.innerHeight;
+            
+            // 2. Get button size
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Math to ensure button stays on screen
-            const newX = Math.random() * (winWidth - btnWidth - 40) + 20;
-            const newY = Math.random() * (winHeight - btnHeight - 40) + 20;
+            // 3. Define the Max Allowable X and Y coordinates
+            // We subtract the button size AND a 20px padding from the right/bottom
+            const maxLeft = winWidth - btnWidth - 20;
+            const maxTop = winHeight - btnHeight - 20;
 
+            // 4. Generate Random Coordinates ensuring min is 20px (left/top padding)
+            const newX = Math.floor(Math.random() * (maxLeft - 20) + 20);
+            const newY = Math.floor(Math.random() * (maxTop - 20) + 20);
+
+            // 5. Apply new coordinates
             noBtn.style.left = `${newX}px`;
             noBtn.style.top = `${newY}px`;
 
-            setTimeout(() => { isMoving = false; }, 200);
+            // Reset lock after transition (0.5s)
+            setTimeout(() => { isMoving = false; }, 500);
         }
 
         function handleYes() {
             questionContent.style.display = 'none';
             successContent.style.display = 'block';
 
-            // Big Confetti Celebration
+            // Confetti Celebration
             const duration = 3000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
             const random = (min, max) => Math.random() * (max - min) + min;
 
             const interval = setInterval(function() {
                 const timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-
+                if (timeLeft <= 0) return clearInterval(interval);
                 const particleCount = 50 * (timeLeft / duration);
                 
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
@@ -307,5 +295,3 @@
     </script>
 </body>
 </html>
-
-
